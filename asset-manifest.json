@@ -1,16 +1,15 @@
 {
   "files": {
     "main.css": "/testwork-react-mercury/static/css/main.073c9b0a.css",
-    "main.js": "/testwork-react-mercury/static/js/main.a7dc87de.js",
+    "main.js": "/testwork-react-mercury/static/js/main.1391cdc2.js",
     "static/js/787.686a58aa.chunk.js": "/testwork-react-mercury/static/js/787.686a58aa.chunk.js",
-    "static/media/logo.svg": "/testwork-react-mercury/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/testwork-react-mercury/index.html",
     "main.073c9b0a.css.map": "/testwork-react-mercury/static/css/main.073c9b0a.css.map",
-    "main.a7dc87de.js.map": "/testwork-react-mercury/static/js/main.a7dc87de.js.map",
+    "main.1391cdc2.js.map": "/testwork-react-mercury/static/js/main.1391cdc2.js.map",
     "787.686a58aa.chunk.js.map": "/testwork-react-mercury/static/js/787.686a58aa.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.a7dc87de.js"
+    "static/js/main.1391cdc2.js"
   ]
 }
