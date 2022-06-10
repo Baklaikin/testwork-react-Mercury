@@ -2,10 +2,11 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+.flex{
+  display: flex;
+  align-items: center;
+  }
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
