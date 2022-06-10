@@ -7,8 +7,14 @@ export default function FormTable() {
             <Form>
                 <Form.Group>
                     <Form.Control type="name" placeholder="First Name"></Form.Control>
-                    <Form.Control type="text" placeholder="Last name"></Form.Control>
+                    </Form.Group>
+                <Form.Group>
+                <Form.Control type="text" placeholder="Last name"></Form.Control>
+                </Form.Group>
+                <Form.Group>
                     <Form.Control type="email" placeholder="Email"></Form.Control>
+                </Form.Group>
+                <Form.Group>
                     <Form.Control type="phone" placeholder="Phone"></Form.Control>
                 </Form.Group>
                 <Button>Отправить</Button>
