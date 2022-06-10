@@ -11,11 +11,11 @@ function App() {
 
   return (
     <Container className="container-sm position-absolute top-50 start-50 translate-middle">
-      <Row>
-        <Col className="col-12 col-sm-6">
+      <Row className="rounded">
+        <Col className="col-12 col-sm-6 py-3">
           <Picture />
         </Col>
-        <Col className="col-12 col-sm-6">
+        <Col className="col-12 col-sm-6 py-3">
           <FormTable />
         </Col>
       </Row>

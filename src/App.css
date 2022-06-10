@@ -5,8 +5,16 @@
 .flex{
   display: flex;
   align-items: center;
-  }
+}
 
+.validation {
+    background-color:  tomato;
+  } 
+
+ .rounded{
+  border-radius: 8px;
+  box-shadow: 7px -5px 11px -7px rgba(0, 0, 0, 0.75), -8px 8px 11px -7px rgba(0, 0, 0, 0.75);
+ } 
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
