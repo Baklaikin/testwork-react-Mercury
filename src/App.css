@@ -14,6 +14,10 @@
 
 .desktop{
   max-width: 600px;
+
+  @media  screen(min-width: 768px) {
+    margin-top: 50px;
+  }
  }
 
 .flag{
@@ -31,7 +35,7 @@
 .country-code{
   position: absolute;
   display: inline-flex;
-  top: 31px;
+  top: 30px;
   left: 10px;
   width: 46px;
   border: none;

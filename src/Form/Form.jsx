@@ -19,7 +19,7 @@ export default function FormTable() {
     const inputCountry = document.querySelector("#countryCode");
 
     useEffect(() => {
-        //Detecting country code based on ip on first load and setting it automatically to phone input
+        //Detecting country code based on ip on first load and setting it automatically to country code input
         getLocation().then(data => {
             setCountryCode(data.dial_code);
             getFlag(data.code).then(data=>setFlag(data))
@@ -142,7 +142,7 @@ export default function FormTable() {
                     countryCode={countryCode}
                 />
                 </div>
-                <Button type="submit">Отправить</Button>
+                <Button type="submit">Send</Button>
             </Form>
     </div>
 )

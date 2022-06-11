@@ -29,15 +29,7 @@ export default function InputField({ id, title, type, placeholder, value="", onC
                 pattern={pattern} required autoComplete="off"
             />
                 </label>
-                {/* {countryCode && <input
-                id="countryCode"
-                className="country-code" 
-                value={countryCode} type={countryCode} name="countryCode"
-                onChange={onChange}
-                required autoComplete="off"
-            />} */}
                 {flag && <div className="flag"><img className="flag" src={flag} alt="flag of the country" /></div>}
-            {/* </div> */}
             </>
     )
  }

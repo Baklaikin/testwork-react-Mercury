@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 
 function App() {
   return (
-    <Container className="container-sm position-absolute top-50 start-50 translate-middle desktop">
+    <Container className="container-sm mt-4 desktop">
       <Row className="rounded">
         <Col className="col-12 col-sm-6 py-3">
           <Picture />
