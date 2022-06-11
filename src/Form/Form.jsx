@@ -10,18 +10,18 @@ export default function FormTable() {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [flag, setFlag] = useState("");
-    const [country,setCountry] = useState("")
+    const [countryCode,setCountryCode] = useState("")
 
     const inputName = document.querySelector("#name");
     const inputLastName = document.querySelector("#surname");
     const inputEmail = document.querySelector("#email");
     const inputPhone = document.querySelector("#phone");
+    const inputCountry = document.querySelector("#countryCode");
 
     useEffect(() => {
         //Detecting country code based on ip on first load and setting it automatically to phone input
         getLocation().then(data => {
-            setCountry(data.code);
-            setPhone(data.dial_code);
+            setCountryCode(data.dial_code);
             getFlag(data.code).then(data=>setFlag(data))
         }).catch((error) => console.log(error.message))
     }, [])
@@ -31,13 +31,13 @@ export default function FormTable() {
         required: true,
         email: "[a-zA-Z0-9!#$%'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*",
         name: "[A-Za-zА-Яа-я]{2,}",
-        phone:"[+]{1}[0-9]{1,4}[0-9]{3}[0-9]{2}[0-9]{4}"     
+        phone:"[0-9]{1,2}[0-9]{3}[0-9]{2}[0-9]{2}"     
     }
 
     function handleChange(e) {
         const { name, value } = e.target;
        
-        switch(name) {
+        switch (name) {
             case "first_name":
                 inputName.style.backgroundColor = "inherit"
                 inputName.setCustomValidity("")
@@ -54,33 +54,42 @@ export default function FormTable() {
                 setEmail(value);
                 break;
             case "phone":
-                if (value === "") {
-                    getLocation().then(data => setPhone(data));
-                    return;
-                }
                 inputPhone.style.backgroundColor = "inherit"
                 inputPhone.setCustomValidity("")
                 setPhone(value);
-                break;   
-            default :
+                break;
+            case "countryCode":
+                 if (value === "") {
+                    setCountryCode("+");
+                    return;
+                }
+                inputCountry.style.backgroundColor = "inherit"
+                inputCountry.setCustomValidity("")
+                setCountryCode(value);
+                break;
+            default:
                 return;
-        }        
+        }
+        
     }
     
     function handleSubmit(e) {
         e.preventDefault(); 
         
     //Additional validation that colors the background in tomato when something wrong    
-        if (first_name.length >= 2 && last_name.length >= 2 && email.includes("@") && email.includes(".") && phone.length >= 9) {
+        if (first_name.length >= 2 && last_name.length >= 2 && email.includes("@") && email.includes(".") && phone.length >= 7) {
 
             //Creating an object with contact information
-            const data = { first_name, last_name, email, phone };
+            const phoneNumber = `${countryCode} ${phone}`
+            const data = { first_name, last_name, email, phoneNumber };
             localStorage.setItem("contact", JSON.stringify(data));
             alert("You have successfully registered")
 
             // Resetting the form input values
             reset();
+            return;
         }
+        alert("Not all fields are properly filled")
     }
 
     function reset() {
@@ -93,19 +102,46 @@ export default function FormTable() {
     return (
         <div>
             <Form className="display-flex flex-direction-column" onSubmit={handleSubmit}>
-                <InputField id="name" title="Name" type="first_name" placeholder="First Name"
+                <InputField
+                    id="name"
+                    title="Name"
+                    type="first_name"
                     value={first_name} onChange={handleChange} pattern={validation.name}
                 />
-                <InputField id="surname"title="Last name" type="last_name" placeholder="Last Name"
+                <InputField
+                    id="surname"
+                    title="Last name"
+                    type="last_name"
                     value={last_name} onChange={handleChange} pattern={validation.name}
                 />
-                <InputField id="email" title="Email" type="email" placeholder="Email"
+                <InputField
+                    id="email"
+                    title="Email"
+                    type="email"
                     value={email} onChange={handleChange}
                     pattern={validation.email}
                 />
-                <InputField id="phone" title="Phone" type="phone" placeholder="Phone"
-                    value={phone} onChange={handleChange} pattern={validation.phone} flag={flag}
+                <div className="input-container">
+                <input
+                    id="countryCode"
+                    className="country-code form-label" 
+                    value={countryCode} type={countryCode}
+                    name="countryCode"
+                    onChange={handleChange}
+                    required autoComplete="off"
                 />
+                <InputField
+                    id="phone"
+                    title="Phone"
+                    type="phone"
+                    placeholder="Phone"
+                    value={phone}
+                    onChange={handleChange}
+                    pattern={validation.phone}
+                    flag={flag}
+                    countryCode={countryCode}
+                />
+                </div>
                 <Button type="submit">Отправить</Button>
             </Form>
     </div>
