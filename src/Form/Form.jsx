@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputField from "../Input/Input";
-import getLocation from "../Api/api";
+import { getLocation, getFlag } from "../Api/api";
 
 export default function FormTable() {
     const [first_name, setFirst_Name] = useState("");
     const [last_name, setLast_Name] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [flag, setFlag] = useState("");
+    const [country,setCountry] = useState("")
 
     const inputName = document.querySelector("#name");
     const inputLastName = document.querySelector("#surname");
@@ -16,7 +18,12 @@ export default function FormTable() {
     const inputPhone = document.querySelector("#phone");
 
     useEffect(() => {
-        getLocation().then(data => setPhone(data))
+        //Detecting country code based on ip on first load and setting it automatically to phone input
+        getLocation().then(data => {
+            setCountry(data.code);
+            setPhone(data.dial_code);
+            getFlag(data.code).then(data=>setFlag(data))
+        }).catch((error) => console.log(error.message))
     }, [])
 
    //Create validation object to pass data to pattern prop 
@@ -32,24 +39,28 @@ export default function FormTable() {
        
         switch(name) {
             case "first_name":
-                inputName.classList.remove("validation");
+                inputName.style.backgroundColor = "inherit"
+                inputName.setCustomValidity("")
                 setFirst_Name(value);
                 break;
             case "last_name":
+                inputLastName.style.backgroundColor = "inherit"
+                inputLastName.setCustomValidity("")
                 setLast_Name(value);
-                inputLastName.classList.remove("validation")
                 break;
             case "email":
+                inputEmail.style.backgroundColor = "inherit"
+                inputEmail.setCustomValidity("")
                 setEmail(value);
-                inputEmail.classList.remove("validation")
                 break;
             case "phone":
                 if (value === "") {
                     getLocation().then(data => setPhone(data));
                     return;
                 }
+                inputPhone.style.backgroundColor = "inherit"
+                inputPhone.setCustomValidity("")
                 setPhone(value);
-                  inputPhone.classList.remove("validation")
                 break;   
             default :
                 return;
@@ -60,30 +71,16 @@ export default function FormTable() {
         e.preventDefault(); 
         
     //Additional validation that colors the background in tomato when something wrong    
-        if (first_name.length < 3) {
-            inputName.classList.add("validation");
-            return;
-        }
-        if (last_name.lenght < 3) {
-            inputLastName.classList.add("validation");
-            return;
-        }
-        if (!email.includes("@") || !email.includes(".")) {
-            inputEmail.classList.add("validation");
-            return;
-        }
-        if (phone.length < 9) {
-            inputPhone.classList.add("validation");
-            return;
-        }
+        if (first_name.length >= 2 && last_name.length >= 2 && email.includes("@") && email.includes(".") && phone.length >= 9) {
 
-    //Creating an object with contact information     
-        const data = { first_name, last_name, email, phone };
-        localStorage.setItem("contact", JSON.stringify(data));
-        alert("You have successfully registered")
+            //Creating an object with contact information
+            const data = { first_name, last_name, email, phone };
+            localStorage.setItem("contact", JSON.stringify(data));
+            alert("You have successfully registered")
 
-    // Resetting the form input values
-        reset();
+            // Resetting the form input values
+            reset();
+        }
     }
 
     function reset() {
@@ -107,7 +104,7 @@ export default function FormTable() {
                     pattern={validation.email}
                 />
                 <InputField id="phone" title="Phone" type="phone" placeholder="Phone"
-                    value={phone} onChange={handleChange} pattern={validation.phone}
+                    value={phone} onChange={handleChange} pattern={validation.phone} flag={flag}
                 />
                 <Button type="submit">Отправить</Button>
             </Form>
